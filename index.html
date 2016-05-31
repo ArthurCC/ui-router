@@ -1,0 +1,64 @@
+<html>
+  <head>
+    <meta charset="UTF-8"/>
+	<title>TP ui-router</title>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.0/angular-ui-router.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/restangular/1.3.1/restangular.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js"></script>
+	<script type="text/javascript">
+      angular.module('myApp', ['ui.router', 'restangular']);
+
+      angular.module('myApp').config(function($stateProvider, $urlRouterProvider) {
+	  
+        $urlRouterProvider.otherwise("/birth");
+		
+		$stateProvider
+		  .state('birth', {
+			url : '/birth',
+			template : '<div>{{text}}oui bravo vous êtes né <button ui-sref="birth.childhood">devenir enfant</button><div ui-view></div></div>',
+			controller : function($scope, text) {
+				$scope.text = text.message;
+			},
+			resolve : {
+				text : function(Restangular) {
+					Restangular.setBaseUrl('http://foaas.com/');
+					return Restangular.one('mornin', 'lalala').get();
+				}
+			}
+		  })
+		  .state('birth.childhood', {
+			url: '/childhood',
+			template: '<div>oui bravo vous êtes un enfant <button ui-sref="birth.childhood.study">aller en iut GEA</button><button ui-sref="birth.childhood.career">aller travailler au guichet de la poste</button><div ui-view></div></div>'
+		  })
+		  .state('birth.childhood.study', {
+			url: '/study',
+			template : '<div>oui bravo vous êtes en iut GEA <div ui-view></div></div>'
+		  })
+		  .state('birth.childhood.career', {
+			url: '/career',
+			template : '<div>oui bravo vous faites carrière à la poste <button ui-sref="birth.childhood.career.pension">devenir vieux et aigri</button><div ui-view></div></div>'
+		  });
+
+		  addWorkingLife($stateProvider, 'birth.childhood.career');
+
+		  function addWorkingLife($stateProvider, parent){
+			$stateProvider.state(`${parent}.pension`, {
+			  url: '/pension',
+			  template: '<div>oui bravo vous êtes vieux et vos enfants en ont rien à foutre, vous allez en maison de retraite</div>'
+			});
+		  }
+      });
+    </script>
+  </head>
+  <body ng-app="myApp">
+    <div ui-view>
+    </div>
+    <button ui-sref="birth">Se réincarner en ornithorynque</button>
+  </body>
+
+  <!-- ajouter restangular(dépendance -> lodash), ajouter des resolve(ui-router) entre chaque état qui utilisent restangular pour utiliser une api http rest $Object
+  option 1 - firebase
+  option 2 - foaas.com -->
+
+</html>
