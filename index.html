@@ -1,18 +1,18 @@
 <html>
   <head>
-    <meta charset="UTF-8"/>
+  	<meta charset="UTF-8"/>
 	<title>TP ui-router</title>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.0/angular-ui-router.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.0/angular-ui-router.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/restangular/1.3.1/restangular.min.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js"></script>
 	<script type="text/javascript">
-      angular.module('myApp', ['ui.router', 'restangular']);
+	  	angular.module('myApp', ['ui.router', 'restangular']);
 
-      angular.module('myApp').config(function($stateProvider, $urlRouterProvider) {
-	  
-        $urlRouterProvider.otherwise("/birth");
-		
+	      	angular.module('myApp').config(function($stateProvider, $urlRouterProvider) {
+		  
+		$urlRouterProvider.otherwise("/birth");
+
 		$stateProvider
 		  .state('birth', {
 			url : '/birth',
@@ -48,8 +48,8 @@
 			  template: '<div>oui bravo vous êtes vieux et vos enfants en ont rien à foutre, vous allez en maison de retraite</div>'
 			});
 		  }
-      });
-    </script>
+	      });
+  	</script>
   </head>
   <body ng-app="myApp">
     <div ui-view>
